@@ -4,147 +4,69 @@ using UnityEngine;
 
 public class BaeMovement : MonoBehaviour
 {
-    //public float moveSpeed = 5f;
+  
 
-    //private float cooldownMove = 1f;
+    public float moveSpeed = 5f;
+    public Transform movePoint;
+    public float gridDistance = 1.3f;
 
-    //public bool isMove;
+    public LayerMask layerMask;
 
-    //public float CooldownMove  
-    //{
-    //    get { return cooldownMove; }
-    //    set
-    //    {
-    //        if (value < 0)
-    //            cooldownMove = value;
-    //    }
-    //}
+    private float cooldownMove = 0.5f;
 
-    //public enum BaeState
-    //{
-    //    Idle,
-    //    Move
-    //}
+    public bool isMove;
 
-    //public enum MoveState
-    //{
-    //    Idle,
-    //    Up,
-    //    Down,
-    //    Left,
-    //    Right
-    //}
-
-    //public BaeState baeState = BaeState.Idle;
-    //public MoveState baeMove = MoveState.Idle;
-
-    //private void Update()
-    //{
-    //    switch(baeState)
-    //    {
-    //        case BaeState.Idle:
-    //            MovementManager();
-    //            break;
-    //        case BaeState.Move:
-    //            UpdateBaeMove();
-    //            //StartCoroutine(ChangeToIdle(cooldownMove));
-    //            break;
-    //    }
-    //}
-
-    //void UpdateBaeMove()
-    //{
-    //    switch (baeMove)
-    //    {
-    //        case MoveState.Up:
-    //            transform.Translate(Vector2.up * moveSpeed * Time.deltaTime);
-    //            break;
-    //        case MoveState.Down:
-    //            transform.Translate(Vector2.down * moveSpeed * Time.deltaTime);
-    //            break;
-    //        case MoveState.Left:
-    //            transform.Translate(Vector2.left * moveSpeed * Time.deltaTime);
-    //            break;
-    //        case MoveState.Right:
-    //            transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
-    //            break;
-    //    }
-
-    //}
-
-    //IEnumerator ChangeToIdle(float waitTime)
-    //{
-    //    while (true)
-    //    {
-    //        yield return new WaitForSeconds(waitTime);
-    //        isMove = false;
-    //        baeState = BaeState.Idle;
-    //    }
-    //}
-
-    //void MovementManager()
-    //{
-    //    float moveHorizontal = Input.GetAxisRaw("Horizontal");
-    //    float moveVertical = Input.GetAxisRaw("Vertical");
-
-    //    if (moveHorizontal > 0)
-    //    {
-    //        baeMove = MoveState.Right;
-    //    }
-    //    else if (moveHorizontal < 0)
-    //    {
-    //        baeMove = MoveState.Left;
-    //    }
-    //    else if (moveVertical > 0)
-    //    {
-    //        baeMove = MoveState.Up;
-    //    }
-    //    else if (moveVertical < 0)
-    //    {
-    //        baeMove = MoveState.Down;
-    //    }
-
-    //    baeState = BaeState.Move;
-    //}
-    public float moveSpeed = 5f; // Speed of movement
-    public float gridSize = 1f; // Size of each grid cell
-    private bool isMoving = false; // Flag to check if character is currently moving
-    private Vector2 destination; // Destination grid position
-
-    private void Update()
+    public float CooldownMove
     {
-        if (!isMoving)
+        get { return cooldownMove; }
+        set
         {
-            // Check for input to move the character
-            float horizontalInput = Input.GetAxisRaw("Horizontal");
-            float verticalInput = Input.GetAxisRaw("Vertical");
-
-            // Calculate destination based on input
-            if (horizontalInput != 0 || verticalInput != 0)
-            {
-                // Calculate destination grid position
-                Vector2Int currentGridPos = Vector2Int.RoundToInt(transform.position / gridSize);
-                Vector2Int inputDirection = new Vector2Int((int)horizontalInput, (int)verticalInput);
-                destination = currentGridPos + inputDirection;
-
-                // Move the character towards the destination
-                StartCoroutine(MoveToDestination(destination));
-            }
+            if (value < 0)
+                cooldownMove = value;
         }
     }
 
-    private IEnumerator MoveToDestination(Vector2 destination)
+    private void Start()
     {
-        isMoving = true;
-        Vector3 targetPosition = new Vector3(destination.x * gridSize, destination.y * gridSize, transform.position.z);
+        movePoint.parent = null;
+    }
 
-        while (Vector3.Distance(transform.position, targetPosition) > 0.01f)
+    private void Update()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
+
+        if(isMove == false)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-            yield return null;
+            if (Vector3.Distance(transform.position, movePoint.position) <= 0.5f)
+            {
+                if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
+                {
+                    if(!Physics2D.OverlapCircle(movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f), .2f, layerMask))
+                    {
+                        movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f) * gridDistance;
+                        isMove = true;
+                        StartCoroutine(BaeMoving(cooldownMove));
+                    }
+                    
+                }
+                else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f)
+                {
+                    if(!Physics2D.OverlapCircle(movePoint.position + new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f), .2f, layerMask))
+                    {
+                        movePoint.position += new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f) * gridDistance;
+                        isMove = true;
+                        StartCoroutine(BaeMoving(cooldownMove));
+                    }
+                
+                }
+            }
         }
+      
+    }
 
-        transform.position = targetPosition;
-        isMoving = false;
+    IEnumerator BaeMoving(float wait)
+    {
+        yield return new WaitForSeconds(wait);
+        isMove = false;
     }
 }
