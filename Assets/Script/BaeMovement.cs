@@ -11,10 +11,9 @@ public class BaeMovement : MonoBehaviour
     public float gridDistance = 1.3f;
 
     public LayerMask layerMask;
+    public bool isMove;
 
     private float cooldownMove = 0.5f;
-
-    public bool isMove;
 
     public float CooldownMove
     {
@@ -57,11 +56,9 @@ public class BaeMovement : MonoBehaviour
                         isMove = true;
                         StartCoroutine(BaeMoving(cooldownMove));
                     }
-                
                 }
             }
         }
-      
     }
 
     IEnumerator BaeMoving(float wait)

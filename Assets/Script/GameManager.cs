@@ -3,9 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameState : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     public UnityEvent startEvent;
+
+    private float timeCheck = 300f;
+
+    public float TimeCheck
+    {
+        get { return timeCheck; }
+        set
+        {
+            if (value < 0)
+                timeCheck = 0f;
+        }
+    }
     public enum GameStates
     {
         Menu,
@@ -23,6 +35,7 @@ public class GameState : MonoBehaviour
             case GameStates.Menu:
                 break;
             case GameStates.GameStart:
+                SubstractTime();
                 startEvent.Invoke();
                 break;
             case GameStates.GamePause:
@@ -31,4 +44,18 @@ public class GameState : MonoBehaviour
                 break;
         }
     }
+
+    public void SubstractTime()
+    {
+        TimeCheck -= Time.deltaTime;
+        if (TimeCheck <= 280)
+            Debug.Log("I am here");
+    }
+
+    public void ChangeGameState(GameStates newGameState)
+    {
+        state = newGameState;
+    }
+
+
 }
