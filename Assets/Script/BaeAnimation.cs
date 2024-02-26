@@ -9,7 +9,8 @@ public class BaeAnimation : MonoBehaviour
         Up,
         Down,
         Left,
-        Right
+        Right,
+        Dead
     }
 
     private Animator animator;
@@ -17,7 +18,7 @@ public class BaeAnimation : MonoBehaviour
 
     private void Start()
     {
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -38,29 +39,29 @@ public class BaeAnimation : MonoBehaviour
                 currentDirection = Direction.Up;
         }
 
-        UpdateAnimationState();
+        //UpdateAnimationState();
     }
 
-    private void UpdateAnimationState()
-    {
-        switch (currentDirection)
-        {
-            case Direction.Up:
-                animator.SetFloat("MoveX", 0f);
-                animator.SetFloat("MoveY", 1f);
-                break;
-            case Direction.Down:
-                animator.SetFloat("MoveX", 0f);
-                animator.SetFloat("MoveY", -1f);
-                break;
-            case Direction.Left:
-                animator.SetFloat("MoveX", -1f);
-                animator.SetFloat("MoveY", 0f);
-                break;
-            case Direction.Right:
-                animator.SetFloat("MoveX", 1f);
-                animator.SetFloat("MoveY", 0f);
-                break;
-        }
-    }
+    //private void UpdateAnimationState()
+    //{
+    //    switch (currentDirection)
+    //    {
+    //        case Direction.Up:
+    //            animator.SetFloat("MoveX", 0f);
+    //            animator.SetFloat("MoveY", 1f);
+    //            break;
+    //        case Direction.Down:
+    //            animator.SetFloat("MoveX", 0f);
+    //            animator.SetFloat("MoveY", -1f);
+    //            break;
+    //        case Direction.Left:
+    //            animator.SetFloat("MoveX", -1f);
+    //            animator.SetFloat("MoveY", 0f);
+    //            break;
+    //        case Direction.Right:
+    //            animator.SetFloat("MoveX", 1f);
+    //            animator.SetFloat("MoveY", 0f);
+    //            break;
+    //    }
+    //}
 }

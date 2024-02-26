@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class BaeMovement : MonoBehaviour
 {
-  
-
     public float moveSpeed = 5f;
     public Transform movePoint;
     public float gridDistance = 1.3f;
@@ -65,5 +63,10 @@ public class BaeMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(wait);
         isMove = false;
+    }
+
+    public void CheckMove(bool check)
+    {
+        isMove = check;
     }
 }

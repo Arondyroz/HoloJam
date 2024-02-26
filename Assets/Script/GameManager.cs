@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
     public UnityEvent startEvent;
 
     private float timeCheck = 300f;
@@ -16,6 +17,8 @@ public class GameManager : MonoBehaviour
         {
             if (value < 0)
                 timeCheck = 0f;
+            else
+                timeCheck = value;
         }
     }
     public enum GameStates
@@ -27,6 +30,17 @@ public class GameManager : MonoBehaviour
     }
 
     public GameStates state = GameStates.Menu;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Update()
     {
@@ -52,9 +66,9 @@ public class GameManager : MonoBehaviour
             Debug.Log("I am here");
     }
 
-    public void ChangeGameState(GameStates newGameState)
+    public void ChangeGameState()
     {
-        state = newGameState;
+        state = GameStates.GameStart;
     }
 
 
