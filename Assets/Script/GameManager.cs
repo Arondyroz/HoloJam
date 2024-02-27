@@ -64,6 +64,18 @@ public class GameManager : MonoBehaviour
         TimeCheck -= Time.deltaTime;
         if (TimeCheck <= 280)
             Debug.Log("I am here");
+
+        if (timeCheck <= 200)
+            Debug.Log("200s");
+
+        if (timeCheck <= 150)
+            Debug.Log("150");
+
+        if (timeCheck <= 50)
+            Debug.Log("50");
+
+        if (timeCheck <= 0)
+            Debug.Log("0");
     }
 
     public void ChangeGameState()
