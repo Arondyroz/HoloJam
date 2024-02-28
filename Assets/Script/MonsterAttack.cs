@@ -12,6 +12,15 @@ public class MonsterAttack : MonoBehaviour
     private int poolSize = 5;
     private Transform bulletPoint;
 
+    public enum MonsterType
+    {
+        Brat,
+        ChaosBeet,
+        ChaosOwl,
+    }
+
+    public MonsterType monsterType;
+
     void Start()
     {
         bulletPoint = gameObject.transform.GetChild(0);
@@ -27,7 +36,21 @@ public class MonsterAttack : MonoBehaviour
 
     void Update()
     {
-        // Fire projectile if mouse button is pressed and enough time has passed since the last shot
+        switch(monsterType)
+        {
+            case MonsterType.Brat:
+                BratControl();
+                break;
+            case MonsterType.ChaosBeet:
+                break;
+            case MonsterType.ChaosOwl:
+                break;
+        }
+        
+    }
+
+    void BratControl()
+    {
         if (Time.time >= nextFireTime)
         {
             nextFireTime = Time.time + 1f / fireRate;

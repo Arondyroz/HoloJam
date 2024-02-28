@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
     {
         Menu,
         GameStart,
-        GamePause,
         GameEnd
     }
 
@@ -51,8 +50,6 @@ public class GameManager : MonoBehaviour
             case GameStates.GameStart:
                 SubstractTime();
                 startEvent.Invoke();
-                break;
-            case GameStates.GamePause:
                 break;
             case GameStates.GameEnd:
                 break;
