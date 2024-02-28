@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7393833531879272141}
   - component: {fileID: 8168957486650146819}
   - component: {fileID: 7887498369980318834}
+  - component: {fileID: 5524845266166364649}
   m_Layer: 0
   m_Name: Brat
   m_TagString: Untagged
@@ -100,8 +101,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 8419479221456862108, guid: 321cad4716d0ec143b1306262a528eaf, type: 3}
-  fireRate: 1
+  fireRate: 0.2
   projectileSpeed: 3
+  canAttack: 0
+  monsterType: 0
 --- !u!95 &7887498369980318834
 Animator:
   serializedVersion: 5
@@ -123,6 +126,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5524845266166364649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349573057711814995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c6b0254fa1baaf40be39262d3d2a9ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  changePos: 2
+  canMove: 0
+  difference: 1.03
+  bratState: 1
 --- !u!1 &2230513279771232855
 GameObject:
   m_ObjectHideFlags: 0

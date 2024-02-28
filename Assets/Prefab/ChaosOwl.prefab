@@ -99,9 +99,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af14736a21d91ef4892d27287726411f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 8419479221456862108, guid: 321cad4716d0ec143b1306262a528eaf, type: 3}
-  fireRate: 1
-  projectileSpeed: 3
+  projectilePrefab: {fileID: 8419479221456862108, guid: 18355b0fc45edca4b890cc8199a285b8, type: 3}
+  fireRate: 0.08
+  projectileSpeed: 1
+  canAttack: 0
   monsterType: 2
 --- !u!95 &8668399241727966099
 Animator:
@@ -149,7 +150,7 @@ Transform:
   m_GameObject: {fileID: 8239854724591356613}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.73, y: -0.026, z: 0}
+  m_LocalPosition: {x: -0.063, y: -0.405, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

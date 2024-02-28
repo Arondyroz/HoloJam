@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BaeMovement : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class BaeMovement : MonoBehaviour
 
     public LayerMask layerMask;
     public bool isMove;
+    public bool isAlive;
+
 
     private float cooldownMove = 0.5f;
 
@@ -33,7 +36,7 @@ public class BaeMovement : MonoBehaviour
 
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
 
-        if(isMove == false)
+        if(isMove == false && GameManager.instance.state != GameManager.GameStates.GameEnd)
         {
             if (Vector3.Distance(transform.position, movePoint.position) <= 0.5f)
             {
@@ -43,7 +46,7 @@ public class BaeMovement : MonoBehaviour
                     {
                         movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f) * gridDistance;
                         isMove = true;
-                        StartCoroutine(BaeMoving(cooldownMove));
+                        StartCoroutine(BaeMoving(CooldownMove));
                     }
 
                 }
@@ -53,7 +56,7 @@ public class BaeMovement : MonoBehaviour
                     {
                         movePoint.position += new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f) * gridDistance;
                         isMove = true;
-                        StartCoroutine(BaeMoving(cooldownMove));
+                        StartCoroutine(BaeMoving(CooldownMove));
                     }
                 }
             }
@@ -69,5 +72,15 @@ public class BaeMovement : MonoBehaviour
     public void CheckMove(bool check)
     {
         isMove = check;
+    }
+
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.CompareTag("BulletProjectile"))
+        {
+            GameManager.instance.state = GameManager.GameStates.GameEnd;
+        }
     }
 }

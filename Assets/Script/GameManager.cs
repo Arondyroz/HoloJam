@@ -7,8 +7,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public UnityEvent startEvent;
+    public UnityEvent deathEvent;
+    public UnityEvent winEvent;
 
-    private float timeCheck = 300f;
+    private float originalTimeCheck = 120f;
+    private float timeCheck = 120f;
 
     public float TimeCheck
     {
@@ -25,7 +28,8 @@ public class GameManager : MonoBehaviour
     {
         Menu,
         GameStart,
-        GameEnd
+        GameEnd,
+        GameWin
     }
 
     public GameStates state = GameStates.Menu;
@@ -41,17 +45,28 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        originalTimeCheck = timeCheck;
+    }
+
     private void Update()
     {
         switch(state)
         {
             case GameStates.Menu:
+                TimeCheck = originalTimeCheck;
                 break;
             case GameStates.GameStart:
                 SubstractTime();
-                startEvent.Invoke();
+                if (TimeCheck <= 0f)
+                    state = GameStates.GameWin;
                 break;
             case GameStates.GameEnd:
+                deathEvent.Invoke();
+                break;
+            case GameStates.GameWin:
+                winEvent.Invoke();
                 break;
         }
     }
@@ -59,26 +74,14 @@ public class GameManager : MonoBehaviour
     public void SubstractTime()
     {
         TimeCheck -= Time.deltaTime;
-        if (TimeCheck <= 280)
-            Debug.Log("I am here");
-
-        if (timeCheck <= 200)
-            Debug.Log("200s");
-
-        if (timeCheck <= 150)
-            Debug.Log("150");
-
-        if (timeCheck <= 50)
-            Debug.Log("50");
-
-        if (timeCheck <= 0)
-            Debug.Log("0");
     }
 
     public void ChangeGameState()
     {
         state = GameStates.GameStart;
+        startEvent.Invoke();
     }
+
 
 
 }

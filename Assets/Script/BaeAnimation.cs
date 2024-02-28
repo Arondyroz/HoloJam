@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BaeAnimation : MonoBehaviour
 {
-
+    private SpriteRenderer mySpriteRenderer;
     public enum Direction
     {
         Idle,
@@ -12,7 +12,6 @@ public class BaeAnimation : MonoBehaviour
         Down,
         Left,
         Right,
-        Dead
     }
 
     private Animator animator;
@@ -21,35 +20,39 @@ public class BaeAnimation : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>();
+        mySpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
     {
-        // Example movement logic (replace with your own movement logic)
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float verticalInput = Input.GetAxisRaw("Vertical");
-
-        
-        if (horizontalInput != 0f || verticalInput != 0f)
+        if(GameManager.instance.state != GameManager.GameStates.GameEnd)
         {
-            if (horizontalInput < 0f)
-                currentDirection = Direction.Left;
-            else if (horizontalInput > 0f)
-                currentDirection = Direction.Right;
-            else if (verticalInput < 0f)
-                currentDirection = Direction.Down;
-            else if (verticalInput > 0f)
-                currentDirection = Direction.Up;  
-        }
-        else
-            currentDirection = Direction.Idle;
+            // Example movement logic (replace with your own movement logic)
+            float horizontalInput = Input.GetAxisRaw("Horizontal");
+            float verticalInput = Input.GetAxisRaw("Vertical");
 
-        UpdateAnimationState();
+
+            if (horizontalInput != 0f || verticalInput != 0f)
+            {
+                if (horizontalInput < 0f)
+                    currentDirection = Direction.Left;
+                else if (horizontalInput > 0f)
+                    currentDirection = Direction.Right;
+                else if (verticalInput < 0f)
+                    currentDirection = Direction.Down;
+                else if (verticalInput > 0f)
+                    currentDirection = Direction.Up;
+            }
+            else
+                currentDirection = Direction.Idle;
+
+            UpdateAnimationState();
+        }
+        
     }
 
     private void UpdateAnimationState()
     {
-        {
             switch (currentDirection)
             {
                 case Direction.Idle:
@@ -73,7 +76,15 @@ public class BaeAnimation : MonoBehaviour
                     animator.SetFloat("MoveY", 0f);
                     break;
             }
-        }
-     
+    }
+
+    public void DeadState(bool check)
+    {
+        animator.SetBool("isDead", check);
+    }
+
+    public void Flip()
+    {
+        mySpriteRenderer.flipY = true;
     }
 }

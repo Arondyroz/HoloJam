@@ -12,6 +12,8 @@ TagManager:
   - UpperLeftTile
   - Bae
   - Wall
+  - ObjectPool
+  - BulletProjectile
   layers:
   - Default
   - TransparentFX
