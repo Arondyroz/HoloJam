@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 8419479221456862108, guid: 321cad4716d0ec143b1306262a528eaf, type: 3}
-  fireRate: 0.2
+  fireRate: 0.5
   projectileSpeed: 3
   canAttack: 0
   monsterType: 0

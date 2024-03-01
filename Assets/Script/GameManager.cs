@@ -82,6 +82,16 @@ public class GameManager : MonoBehaviour
         startEvent.Invoke();
     }
 
+    public void PhaseChange(GameObject go)
+    {
+        if (TimeCheck <= 90f)
+            go.SetActive(true);
+
+        if (timeCheck <= 45f)
+            go.SetActive(true);
+
+    }
+
 
 
 }
