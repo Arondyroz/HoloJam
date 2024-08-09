@@ -1,4 +1,4 @@
-# HoloJam
+# HakozBaelsGame - HoloJam
 HoloJam #3 - Hololive Fan Game Jam
 https://itch.io/jam/holojam-3
 
